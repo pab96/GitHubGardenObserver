@@ -1,0 +1,13 @@
+# How to clone github folder into your drive
+# From: https://www.linux.com/learn/beginning-git-and-github-linux-users
+
+## Fetching Data From Online Repository
+$ mkdir BioMaker
+$ cd BioMaker
+$ mkdir git-repos
+$ git clone https://github.com/BioMakers/27_Remote-Environment-Controller-for-Experiments-in-Extreme-Environments
+-> Enter Usaername and Password
+
+## Uploading modifyed files to GitHub
+git config --global user.name "<NAME>"
+git config --global user.email "<email>"
