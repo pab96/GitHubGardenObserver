@@ -1,0 +1,11 @@
+#!/bin/bash
+# This file uploads all chnages made in this folder to github
+# If using this for the firs time make the fle executabel: chmod 755 uploadToGitHub
+# Execute file with: ./uploadToGitHub
+echo "Uploading to Github..."
+git status -s
+git add .
+git commit -m $(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r
+git push origin master
+
+
