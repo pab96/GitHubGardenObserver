@@ -5,7 +5,7 @@
 echo "Uploading to Github..."
 git status -s
 git add .
-git commit -m $(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r
+git commit -m "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"
 git push origin master
 
 
