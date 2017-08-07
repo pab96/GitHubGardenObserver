@@ -9,5 +9,6 @@ $ git clone https://github.com/BioMakers/27_Remote-Environment-Controller-for-Ex
 -> Enter Usaername and Password
 
 ## Uploading modifyed files to GitHub
-git config --global user.name "<NAME>"
-git config --global user.email "<email>"
+git config --global user.name "pab96"
+git config --global user.email "ppab96@cam.ac.uk"
+git status -s 

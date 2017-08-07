@@ -1,0 +1,9 @@
+#!/bin/bash
+# My first script
+
+# chmod 755 firstAttempt
+echo "Hello World!"
+
+
+# Run: ./firstAttempt
+# If file is in a folder included in the path it can also be executed by $ firstAttempt
