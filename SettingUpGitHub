@@ -1,3 +1,4 @@
+## GitHubSetup
 # How to clone github folder into your drive
 # From: https://www.linux.com/learn/beginning-git-and-github-linux-users
 
@@ -12,3 +13,16 @@ $ git clone https://github.com/BioMakers/27_Remote-Environment-Controller-for-Ex
 git config --global user.name "pab96"
 git config --global user.email "ppab96@cam.ac.uk"
 git status -s 
+-> Or simplified for all files in the folder execute ./uploadToGiHub
+
+
+
+## Setting up a file that is executed upon rasperry boot
+# Following: https://raspberrypi.stackexchange.com/questions/8734/execute-script-on-start-up
+$ sudo nano /etc/init.d/NameOfFile     -> makes a new file called NameOfFile here I used: ExecuteUponRaspberryBoot
+#! /bin/sh
+# /etc/init.d/NameOfFile
+ctrl+X, Y, Enter 		       -> to safe the file
+$ sudo chmod 755 /etc/init.d/NameOfFile -> makes the file executable
+$ sudo update-rc.d superscript defaults-> register to be run at startup
+-> For modifying this file type: sudoedit /etc/init.d/NameOfFile
