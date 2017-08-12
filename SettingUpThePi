@@ -9,6 +9,17 @@ $ mkdir git-repos
 $ git clone https://github.com/BioMakers/27_Remote-Environment-Controller-for-Experiments-in-Extreme-Environments
 -> Enter Usaername and Password
 
+## Storing github password and username
+$ cd ~
+-> make a new text file here called netrc, save it, then rename to .netrc
+$ sudo nano ~./netrc 
+#Write this in the file and save:
+machine github.com
+	login pab96
+	password <InsertPassword>
+# Save
+$ chmod 600 ~/.netrc -> to make it invisible to other useres
+
 ## Uploading modifyed files to GitHub
 git config --global user.name "pab96"
 git config --global user.email "ppab96@cam.ac.uk"
