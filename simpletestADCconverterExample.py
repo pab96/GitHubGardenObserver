@@ -12,6 +12,8 @@ import os
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 
+fileAndfolderPathStoreData="/home/pi/BioMaker/GitHubGardenObserver/Data/GardenObserver_SensorData.txt"
+
 # Software SPI configuration:
 CLK  = 18
 MISO = 23
@@ -59,11 +61,11 @@ print(sensorDataToBeSaved)
 
 ## Writing to Sensor Storage File
 fileHandle=0;
-if os.path.isfile("/home/pi/Desktop/TestPictures/GardenObserver_SensorData.txt"):  #check if file already exists
-    fileHandle = open("/home/pi/Desktop/TestPictures/GardenObserver_SensorData.txt","a") #if already exist go to "a"= appendix mode and new text will be added below
+if os.path.isfile(fileAndfolderPathStoreData):  #check if file already exists
+    fileHandle = open(fileAndfolderPathStoreData,"a") #if already exist go to "a"= appendix mode and new text will be added below
     fileHandle.write("\n")
 else:
-    fileHandle = open("/home/pi/Desktop/TestPictures/GardenObserver_SensorData.txt","a")
+    fileHandle = open(fileAndfolderPathStoreData,"a")
     fileHandle.write("Date Time | Avg_Sens_1 |Avg_Sens_2 |Avg_Sens_3 |Avg_Sens_4 |Avg_Sens_5 |Avg_Sens_6 |Avg_Sens_7 |Avg_Sens_8 |Std_Sens_1 |Std_Sens_2 |Std_Sens_3 |Std_Sens_4 |Std_Sens_5 |Std_Sens_6 |Std_Sens_7 |Std_Sens_8 |") 
     fileHandle.write("\n")
     fileHandle.write('-' * 100)

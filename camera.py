@@ -14,7 +14,8 @@ camera.resolution = (500, 500) #To find default resolution (that of your screen)
 camera.annotate_text_size = 12
 
 sleep(5)                             # 2 sec min sleep time required for camera to adjust light level 
-folderLocationName= '/home/pi/Desktop/TestPictures/'
+folderLocationName="/home/pi/BioMaker/GitHubGardenObserver/Data/"
+
 dateAndTimeInOneNumber=strftime("%Y%m%d_%H%M%S", gmtime())
 camera.capture(folderLocationName+'GardenPiCam_'+dateAndTimeInOneNumber+'.jpg')
 
