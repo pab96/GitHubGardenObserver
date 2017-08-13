@@ -3,7 +3,7 @@
 # Author: Tony DiCola
 # License: Public Domain
 import time
-from time import gmtime, strftime
+from time import sleep,localtime, strftime
 import sys
 import numpy as np
 import os
@@ -47,14 +47,14 @@ stdSensorData=np.std(allSamplingValues,axis=0)
 #print("Averaged values:")
 #print(averageSensorData)
 #print(stdSensorData)
-##sys.stdout.write(strftime("%d.%m.%Y %H:%M:%S", gmtime())) # use sys.stout.write to print in same line as command below
+##sys.stdout.write(strftime("%d.%m.%Y %H:%M:%S", localtime())) # use sys.stout.write to print in same line as command below
 ##print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(averageSensorData,decimals=1)))
 ##print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(stdSensorData,decimals=2)))
 
 ## preparing sensor data for storage
 print("Date,Time | Avg_Sens_1 |Avg_Sens_2 |Avg_Sens_3 |Avg_Sens_4 |Avg_Sens_5 |Avg_Sens_6 |Avg_Sens_7 |Avg_Sens_8 |Std_Sens_1 |Std_Sens_2 |Std_Sens_3 |Std_Sens_4 |Std_Sens_5 |Std_Sens_6 |Std_Sens_7 |Std_Sens_8 |")
 print('-' * 57)
-sensorDataToBeSaved=strftime("%d.%m.%Y %H:%M:%S", gmtime()) # Date and Time
+sensorDataToBeSaved=strftime("%d.%m.%Y %H:%M:%S", localtime()) # Date and Time
 sensorDataToBeSaved += ' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(averageSensorData,decimals=1)) # The sensor data avaerage values to 1 decimal place
 sensorDataToBeSaved += ' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(stdSensorData,decimals=2))    # The sensor data std values to 2 decimal place
 print(sensorDataToBeSaved)
@@ -73,6 +73,6 @@ else:
 
 fileHandle.write(sensorDataToBeSaved)
 fileHandle.close() 
-print("Sensor data successfully saved")
+print("Sensor data successfully saved locally")
 
 
