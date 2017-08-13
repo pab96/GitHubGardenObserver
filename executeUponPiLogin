@@ -1,0 +1,7 @@
+#! /bin/sh
+# /etc/init.de/executeUponRaspberryBoot
+
+# make this file executable first: sudo chmod 755 executeuponPiLogin
+## This is file is executed upon rasperry booting
+python /home/pi/BioMaker/GitHubGardenObserver/camera.py
+python /home/pi/BioMaker/GitHubGardenObserver/readAndStoreSensorData.py
