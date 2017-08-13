@@ -4,4 +4,5 @@
 ## This is file is executed upon rasperry booting
 python /home/pi/BioMaker/GitHubGardenObserver/camera.py
 sudo python /home/pi/BioMaker/GitHubGardenObserver/readAndStoreSensorData.py
-./BioMaker/GitHubGardenObserver/uploadToGitHub
+cd BioMaker/GitHubGardenObserver/
+./uploadToGitHub
