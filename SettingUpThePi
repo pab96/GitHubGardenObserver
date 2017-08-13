@@ -10,15 +10,26 @@ $ git clone https://github.com/BioMakers/27_Remote-Environment-Controller-for-Ex
 -> Enter Usaername and Password
 
 ## Storing github password and username
-$ cd ~
--> make a new text file here called netrc, save it, then rename to .netrc
-$ sudo nano ~./netrc 
-#Write this in the file and save:
-machine github.com
-	login pab96
-	password <InsertPassword>
-# Save
-$ chmod 600 ~/.netrc -> to make it invisible to other useres
+##$ cd ~
+##-> make a new text file here called netrc, save it, then rename to .netrc
+##$ sudo nano ~./netrc 
+###Write this in the file and save:
+##machine github.com
+##	login pab96
+##	password <InsertPassword>
+### Save
+##$ chmod 600 ~/.netrc -> to make it invisible to other useres
+$To set up ssh client follow this: https://help.github.com/articles/checking-for-existing-ssh-keys/ -> make sure to click the linux icon under the heading
+$ ssh-keygen -t rsa -b 4096 -C "pab96"cam.ac.uk"
+-> enter and don't add a passphrase just press enter
+$ eval "$(ssh-agent -s)"
+$ ssh-add ~/.ssh/id_rsa
+$ sudo apt-get install xclip
+$ xclip -sel clip < ~/.ssh/id_rsa.pub
+-> follow instructrions on how to add SSH key (does no work in standrad pi browser use chrome (potentially on dfferent laptop to insert code, the code you can read from:sudo nano ~/.ssh/id_rsa.pub) websitde: https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/#platform-linux
+
+
+
 
 ## Uploading modifyed files to GitHub
 git config --global user.name "pab96"
