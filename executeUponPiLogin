@@ -2,7 +2,12 @@
 
 # make this file executable first: sudo chmod 755 executeUponPiLogin
 ## This is file is executed upon rasperry booting
+
 python /home/pi/BioMaker/GitHubGardenObserver/camera.py
 sudo python /home/pi/BioMaker/GitHubGardenObserver/readAndStoreSensorData.py
 cd BioMaker/GitHubGardenObserver/
 ./uploadToGitHub
+
+#echo "Pi will shut off ok? [y/n]"
+#read -p "pi Will shut off" -t3 var
+#echo $var
