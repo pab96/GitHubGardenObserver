@@ -8,16 +8,9 @@ echo "Hello World!"
 # Run: ./firstAttempt
 # If file is in a folder included in the path it can also be executed by $ firstAttempt
 
-echo "$PATH"
 
-countDownToShutDown=30
-echo "WARNING: Pi will shut off in $countdownToShutDow sec. Press Ctrl-c to stop"
 
-while  [ $countDownToShutDown >> 0 ]
-do
-	echo "$countdownToShutDown"
-	countDownToShutDown=$countDownToShutDown-1
-	countDownToShutDown=$((countDownToShutDown-1))
-	sleep 1
-done
+
+
+
 
