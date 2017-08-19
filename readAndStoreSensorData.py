@@ -1,7 +1,5 @@
-# Simple example of reading the MCP3008 analog input channels and printing
-# them all out.
-# Author: Tony DiCola
-# License: Public Domain
+# Reading from the MCP3008 and stroing the date
+# Execute me with sudo python
 import time
 from time import sleep,localtime, strftime
 import sys
@@ -11,6 +9,8 @@ import os
 # Import SPI library (for hardware SPI) and MCP3008 library.
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
+
+import RPi.GPIO as GPIO #For pulling pins high/low
 
 fileAndfolderPathStoreData="/home/pi/BioMaker/GitHubGardenObserver/Data/GardenObserver_SensorData.txt"
 
@@ -51,15 +51,38 @@ stdSensorData=np.std(allSamplingValues,axis=0)
 ##print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(averageSensorData,decimals=1)))
 ##print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(stdSensorData,decimals=2)))
 
+## Converting MCP3008 value to respective Units
+averageSensorData=np.multiply(averageSensorData, 3.3/1023) # Converting all values to Volt
+# MCP3008 Channel 0: Adjustable Resistor
+averageSensorData[0]=averageSensorData[0]/3.3*100  # Converting to %
+# MCP3008 Channel 1: Light Dependent Resistor LDR
+averageSensorData[1]=averageSensorData[1]/3.3*100  # Converting to %
+# MCP3008 Channel 2: Soil Moisture Sensor. Was calibrated by hand: 1.325 is full coverd in water, 3.3 is in air dry. Will read [%] water 0% meaning dry!
+averageSensorData[2]=(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Converting to %, 0 being dry, 100% being immersed in water
+
+# MCP3008 Channel 6: TGS 2600 Air Contaminants: R_S=(5V/V_out-1)* R_load /R_referenceReading
+# Lower values than 100% mean air is contaminated with CO, Methane, Isobutahnol, Hydrogen, Ethanol
+averageSensorData[6]=(5/averageSensorData[6]-1)*1000/25000*100 # R_referencereading was doen in room with open window 20degC August [%]
+
+# MCP3008 Channel 7: Thermometer LM35DZ V_out=10mV/degC*T
+averageSensorData[7]=averageSensorData[7]/0.01  # Temp in [DegC]
+
+
 ## preparing sensor data for storage
-print("Date,Time | Avg_Sens_1 |Avg_Sens_2 |Avg_Sens_3 |Avg_Sens_4 |Avg_Sens_5 |Avg_Sens_6 |Avg_Sens_7 |Avg_Sens_8 |Std_Sens_1 |Std_Sens_2 |Std_Sens_3 |Std_Sens_4 |Std_Sens_5 |Std_Sens_6 |Std_Sens_7 |Std_Sens_8 |")
+print("Date,Time | Avg_Sens_1 |Avg_Sens_2 |Avg_Sens_3 |Avg_Sens_4 |Avg_Sens_5 |Avg_Sens_6 |Avg_Sens_7 |Avg_Sens_8 ||Std_Sens_1 |Std_Sens_2 |Std_Sens_3 |Std_Sens_4 |Std_Sens_5 |Std_Sens_6 |Std_Sens_7 |Std_Sens_8 |")
 print('-' * 57)
 sensorDataToBeSaved=strftime("%d.%m.%Y %H:%M:%S", localtime()) # Date and Time
-sensorDataToBeSaved += ' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(averageSensorData,decimals=1)) # The sensor data avaerage values to 1 decimal place
-sensorDataToBeSaved += ' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(stdSensorData,decimals=2))    # The sensor data std values to 2 decimal place
+sensorDataToBeSaved += ' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(averageSensorData,decimals=3)) # The sensor data avaerage values to 1 decimal place
+sensorDataToBeSaved += ' || {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(stdSensorData,decimals=3))    # The sensor data std values to 2 decimal place
 print(sensorDataToBeSaved)
 
+GPIO.setup(21, GPIO.OUT)
+GPIO.output(21, GPIO.HIGH)
+time.sleep(2) ##### Delete this
+GPIO.output(21, GPIO.LOW)
 time.sleep(10) ##### Delete this
+
+
 ## Writing to Sensor Storage File
 fileHandle=0;
 if os.path.isfile(fileAndfolderPathStoreData):  #check if file already exists
@@ -67,7 +90,7 @@ if os.path.isfile(fileAndfolderPathStoreData):  #check if file already exists
     fileHandle.write("\n")
 else:
     fileHandle = open(fileAndfolderPathStoreData,"a")
-    fileHandle.write("Date Time | Avg_Sens_1 |Avg_Sens_2 |Avg_Sens_3 |Avg_Sens_4 |Avg_Sens_5 |Avg_Sens_6 |Avg_Sens_7 |Avg_Sens_8 |Std_Sens_1 |Std_Sens_2 |Std_Sens_3 |Std_Sens_4 |Std_Sens_5 |Std_Sens_6 |Std_Sens_7 |Std_Sens_8 |") 
+    fileHandle.write("Date Time | Avg_Sens_1 |Avg_Sens_2 |Avg_Sens_3 |Avg_Sens_4 |Avg_Sens_5 |Avg_Sens_6 |Avg_Sens_7 |Avg_Sens_8 ||Std_Sens_1 |Std_Sens_2 |Std_Sens_3 |Std_Sens_4 |Std_Sens_5 |Std_Sens_6 |Std_Sens_7 |Std_Sens_8 |") 
     fileHandle.write("\n")
     fileHandle.write('-' * 100)
     fileHandle.write("\n")
