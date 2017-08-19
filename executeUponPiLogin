@@ -9,5 +9,6 @@ cd BioMaker/GitHubGardenObserver/
 ./uploadToGitHub
 
 echo "Pi will shut off in 60 sec. Press Ctrl-c to stop"
+sleep 60
 sudo shutdown -h now
 
