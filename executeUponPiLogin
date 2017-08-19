@@ -18,5 +18,5 @@ do
 	countDownToShutDown=$[$countDownToShutDown-1]
 	sleep 1
 done
-#sudo shutdown -h now
+sudo shutdown -h now
 
