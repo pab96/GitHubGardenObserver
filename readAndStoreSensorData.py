@@ -59,6 +59,7 @@ sensorDataToBeSaved += ' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} |
 sensorDataToBeSaved += ' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(stdSensorData,decimals=2))    # The sensor data std values to 2 decimal place
 print(sensorDataToBeSaved)
 
+time.sleep(10) ##### Delete this
 ## Writing to Sensor Storage File
 fileHandle=0;
 if os.path.isfile(fileAndfolderPathStoreData):  #check if file already exists
