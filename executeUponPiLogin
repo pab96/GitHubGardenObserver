@@ -15,6 +15,7 @@ while  [$countdownToShutDown -le 1]
 do
 	echo $countdownToShutDown
 	countdownToShutDown=$((countdownToShutDown-1))
+	sleep 1
 done
 sudo shutdown -h now
 
