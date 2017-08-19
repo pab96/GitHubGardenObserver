@@ -8,7 +8,13 @@ sudo python /home/pi/BioMaker/GitHubGardenObserver/readAndStoreSensorData.py
 cd BioMaker/GitHubGardenObserver/
 ./uploadToGitHub
 
-echo "Pi will shut off in 60 sec. Press Ctrl-c to stop"
-sleep 60
+countdownToShutDown=30
+echo "WARNING: Pi will shut off in $countdownToShutDown sec. Press Ctrl-c to stop"
+
+while  [$countdownToShutDown -le 1]
+do
+	echo $countdownToShutDown
+	countdownToShutDown=$((countdownToShutDown-1))
+done
 sudo shutdown -h now
 
