@@ -8,6 +8,13 @@ echo "Hello World!"
 # Run: ./firstAttempt
 # If file is in a folder included in the path it can also be executed by $ firstAttempt
 
+countDownToShutDown="15"
+while [ $countDownToShutDown -gt 0 ]
+do
+	echo $countDownToShutDown
+	countDownToShutDown=$[$countDownToShutDown-1]
+	sleep 1
+done
 
 
 

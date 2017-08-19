@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 
 # make this file executable first: sudo chmod 755 executeUponPiLogin
 ## This is file is executed upon rasperry booting
@@ -9,7 +9,9 @@ cd BioMaker/GitHubGardenObserver/
 ./uploadToGitHub
 
 countDownToShutDown="15"
+
 echo "WARNING: Pi will shut off in $countDownToShutDown sec. Press Ctrl-c to stop"
+
 while [ $countDownToShutDown -gt 0 ]
 do
 	echo $countDownToShutDown
