@@ -21,10 +21,12 @@ MOSI = 24
 CS   = 25
 mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
 
-# Hardware SPI configuration:
-# SPI_PORT   = 0
-# SPI_DEVICE = 0
-# mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE))
+GPIO.setup(21, GPIO.OUT)
+GPIO.output(21, GPIO.HIGH)
+time.sleep(2) ##### Delete this
+GPIO.output(21, GPIO.LOW)
+time.sleep(10) ##### Delete this
+
 
 ## Sensor data sampling
 print('Reading MCP3008 values, press Ctrl-C to quit...')
@@ -75,13 +77,6 @@ sensorDataToBeSaved=strftime("%d.%m.%Y %H:%M:%S", localtime()) # Date and Time
 sensorDataToBeSaved += ' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(averageSensorData,decimals=3)) # The sensor data avaerage values to 1 decimal place
 sensorDataToBeSaved += ' || {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4}'.format(*np.around(stdSensorData,decimals=3))    # The sensor data std values to 2 decimal place
 print(sensorDataToBeSaved)
-
-GPIO.setup(21, GPIO.OUT)
-GPIO.output(21, GPIO.HIGH)
-time.sleep(2) ##### Delete this
-GPIO.output(21, GPIO.LOW)
-time.sleep(10) ##### Delete this
-
 
 ## Writing to Sensor Storage File
 fileHandle=0;
