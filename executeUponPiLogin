@@ -8,6 +8,6 @@ sudo python /home/pi/BioMaker/GitHubGardenObserver/readAndStoreSensorData.py
 cd BioMaker/GitHubGardenObserver/
 ./uploadToGitHub
 
-#echo "Pi will shut off ok? [y/n]"
-#read -p "pi Will shut off" -t3 var
-#echo $var
+echo "Pi will shut off in 60 sec. Press Ctrl-c to stop"
+sudo shutdown -h now
+

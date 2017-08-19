@@ -7,3 +7,10 @@ echo "Hello World!"
 
 # Run: ./firstAttempt
 # If file is in a folder included in the path it can also be executed by $ firstAttempt
+
+while 2>>1
+do
+	echo "Hello"
+	sleep 3
+done
+echo "Ende"
