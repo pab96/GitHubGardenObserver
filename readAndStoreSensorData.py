@@ -1,5 +1,5 @@
 # Reading from the MCP3008 and stroing the date
-# Execute me with sudo python
+# Execute me with: sudo python readAndStoreSensorData.py
 import time
 from time import sleep,localtime, strftime
 import sys
@@ -23,14 +23,12 @@ mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
 
 GPIO.setup(21, GPIO.OUT)
 GPIO.output(21, GPIO.HIGH)
-time.sleep(2) ##### Delete this
-GPIO.output(21, GPIO.LOW)
-time.sleep(10) ##### Delete this
+print("Sensors board is being powered...")
 
 
 ## Sensor data sampling
 print('Reading MCP3008 values, press Ctrl-C to quit...')
-samplingTime=2; # time through which sensor data is sampled
+samplingTime=20; # time through which sensor data is sampled
 samplingInterval=0.25; # sample every 0.25sec
 samplingCount=0
 allSamplingValues=d = np.zeros((samplingTime/samplingInterval+1,8)) # Initialising a zeros matrix
@@ -41,6 +39,9 @@ while samplingCount<=samplingTime/samplingInterval:
         allSamplingValues[samplingCount][i]= mcp.read_adc(i)
     samplingCount += 1
     time.sleep(samplingInterval)
+
+GPIO.output(21, GPIO.LOW)
+print("Sensor reading done power shut off from sensor boad")
 
 ## Sensor data processing mean and std
 averageSensorData=np.mean(allSamplingValues,axis=0)
@@ -61,6 +62,11 @@ averageSensorData[0]=averageSensorData[0]/3.3*100  # Converting to %
 averageSensorData[1]=averageSensorData[1]/3.3*100  # Converting to %
 # MCP3008 Channel 2: Soil Moisture Sensor. Was calibrated by hand: 1.325 is full coverd in water, 3.3 is in air dry. Will read [%] water 0% meaning dry!
 averageSensorData[2]=(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Converting to %, 0 being dry, 100% being immersed in water
+# MCP3008 Channel 3: Battery Voltage: Batterie is on a voltage devider with a R_1=5.1Mohm and R_2=1M+3*100k=1.3Mohm -> Voltage over R_2: V_measured=V_2=V_battery*R_2/(R_1+R_2)-> V_battery=V_measured*(R_1+R_2)/R_2
+# Voltage could also be converted in % charged. 12.7V means 100% charged, 11.9 means discharged
+averageSensorData[3]=averageSensorData[3]*(5.1+1.3)/1.3  # Converting to %, 0 being dry, 100% being immersed in water
+
+
 
 # MCP3008 Channel 6: TGS 2600 Air Contaminants: R_S=(5V/V_out-1)* R_load /R_referenceReading
 # Lower values than 100% mean air is contaminated with CO, Methane, Isobutahnol, Hydrogen, Ethanol
