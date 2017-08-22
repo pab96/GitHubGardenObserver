@@ -28,7 +28,7 @@ print("Sensors board is being powered...")
 
 ## Sensor data sampling
 print('Reading MCP3008 values, press Ctrl-C to quit...')
-samplingTime=45; # time through which sensor data is sampled
+samplingTime=5; # time through which sensor data is sampled
 samplingInterval=0.25; # sample every 0.25sec
 samplingCount=0
 allSamplingValues=d = np.zeros((samplingTime/samplingInterval+1,8)) # Initialising a zeros matrix
