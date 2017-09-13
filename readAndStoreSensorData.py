@@ -64,7 +64,7 @@ averageSensorData[1]=averageSensorData[1]/3.3*100  # Converting to %
 averageSensorData[2]=(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Converting to %, 0 being dry, 100% being immersed in water
 # MCP3008 Channel 3: Battery Voltage: Batterie is on a voltage devider with a R_1=5.1Mohm and R_2=1M+3*100k=1.3Mohm -> Voltage over R_2: V_measured=V_2=V_battery*R_2/(R_1+R_2)-> V_battery=V_measured*(R_1+R_2)/R_2
 # Voltage could also be converted in % charged. 12.7V means 100% charged, 11.9 means discharged
-averageSensorData[3]=averageSensorData[3]*(5.1+1.3)/1.3  # Converting to %, 0 being dry, 100% being immersed in water
+averageSensorData[3]=averageSensorData[3]#*(5.1+1.3)/1.3  # Converting to %, 0 being empty 100% being charged
 # MCP3008 Channel 4: UV Sensor
 averageSensorData[4]=0.125*averageSensorData[4]+1  #UV intensity @365nm in [mW/cm^2]
 
