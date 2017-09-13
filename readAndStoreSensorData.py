@@ -55,7 +55,7 @@ stdSensorData=np.std(allSamplingValues,axis=0)
 ##print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(stdSensorData,decimals=2)))
 
 ## Converting MCP3008 value to respective Units
-averageSensorData=np.multiply(averageSensorData, 3.3/1023) # Converting all values to Volt
+averageSensorData=np.divide(averageSensorData, 3.3*1023) # Converting all values to Volt
 # MCP3008 Channel 0: Adjustable Resistor
 averageSensorData[0]=averageSensorData[0]/3.3*100  # Converting to %
 # MCP3008 Channel 1: Light Dependent Resistor LDR
@@ -65,6 +65,8 @@ averageSensorData[2]=(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Convert
 # MCP3008 Channel 3: Battery Voltage: Batterie is on a voltage devider with a R_1=5.1Mohm and R_2=1M+3*100k=1.3Mohm -> Voltage over R_2: V_measured=V_2=V_battery*R_2/(R_1+R_2)-> V_battery=V_measured*(R_1+R_2)/R_2
 # Voltage could also be converted in % charged. 12.7V means 100% charged, 11.9 means discharged
 averageSensorData[3]=averageSensorData[3]*(5.1+1.3)/1.3  # Converting to %, 0 being dry, 100% being immersed in water
+# MCP3008 Channel 4: UV Sensor
+averageSensorData[4]=0.125*averageSensorData[4]+1  #UV intensity @365nm in [mW/cm^2]
 
 
 
