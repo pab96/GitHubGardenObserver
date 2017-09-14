@@ -21,14 +21,14 @@ MOSI = 24
 CS   = 25
 mcp = Adafruit_MCP3008.MCP3008(clk=CLK, cs=CS, miso=MISO, mosi=MOSI)
 
-GPIO.setup(21, GPIO.OUT)
-GPIO.output(21, GPIO.HIGH)
+#GPIO.setup(21, GPIO.OUT)
+#GPIO.output(21, GPIO.HIGH)
 print("Sensors board is being powered...")
 
 
 ## Sensor data sampling
 print('Reading MCP3008 values, press Ctrl-C to quit...')
-samplingTime=5; # time through which sensor data is sampled
+samplingTime=7; # time through which sensor data is sampled
 samplingInterval=0.25; # sample every 0.25sec
 samplingCount=0
 allSamplingValues=d = np.zeros((samplingTime/samplingInterval+1,8)) # Initialising a zeros matrix
@@ -40,7 +40,7 @@ while samplingCount<=samplingTime/samplingInterval:
     samplingCount += 1
     time.sleep(samplingInterval)
 
-GPIO.output(21, GPIO.LOW)
+#GPIO.output(21, GPIO.LOW)
 print("Sensor reading done power shut off from sensor boad")
 
 ## Sensor data processing mean and std
@@ -55,18 +55,18 @@ stdSensorData=np.std(allSamplingValues,axis=0)
 ##print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(stdSensorData,decimals=2)))
 
 ## Converting MCP3008 value to respective Units
-averageSensorData=np.divide(averageSensorData, 3.3*1023) # Converting all values to Volt
+averageSensorData=np.multiply(averageSensorData, 3.3/1023) # Converting all values to Volt
 # MCP3008 Channel 0: Adjustable Resistor
 averageSensorData[0]=averageSensorData[0]/3.3*100  # Converting to %
 # MCP3008 Channel 1: Light Dependent Resistor LDR
-averageSensorData[1]=averageSensorData[1]/3.3*100  # Converting to %
+averageSensorData[1]=averageSensorData[1]/3.3*100  # Converting to % 25% is quite bright, 65% ambient, 95% dark
 # MCP3008 Channel 2: Soil Moisture Sensor. Was calibrated by hand: 1.325 is full coverd in water, 3.3 is in air dry. Will read [%] water 0% meaning dry!
 averageSensorData[2]=(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Converting to %, 0 being dry, 100% being immersed in water
 # MCP3008 Channel 3: Battery Voltage: Batterie is on a voltage devider with a R_1=5.1Mohm and R_2=1M+3*100k=1.3Mohm -> Voltage over R_2: V_measured=V_2=V_battery*R_2/(R_1+R_2)-> V_battery=V_measured*(R_1+R_2)/R_2
 # Voltage could also be converted in % charged. 12.7V means 100% charged, 11.9 means discharged
-averageSensorData[3]=averageSensorData[3]#*(5.1+1.3)/1.3  # Converting to %, 0 being empty 100% being charged
+averageSensorData[3]=averageSensorData[3]*(5.1+1.3)/1.3  # Converting to %, 0 being empty 100% being charged
 # MCP3008 Channel 4: UV Sensor
-averageSensorData[4]=0.125*averageSensorData[4]+1  #UV intensity @365nm in [mW/cm^2]
+averageSensorData[4]=0.125*averageSensorData[4]+1  #UV intensity @365nm in [mW/cm^2] 1-3 is minimal UV, 3-4 is low, 5-6 is moderate, 7-9 is high, 10-12 is very high exposure
 
 
 
