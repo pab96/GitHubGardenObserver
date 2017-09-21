@@ -22,7 +22,7 @@ This results in:
 t_on=3569.85s
 t_off=0.69s 
 
-![alt text](https://raw.githubusercontent.com/pab96/GitHubGardenObserver/TimerCircuit.png)
+![alt text](https://raw.githubusercontent.com/pab96/GitHubGardenObserver/TimerCircuit.png "Test")
 
 
 
