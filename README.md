@@ -1,6 +1,10 @@
 # GitHubGardenObserver
 Documentation for "Remote Environment Controller for  Experiments in Extreme Environments"
 
+# Project Title
+
+
+
 
 Solar Power and Batteries:
 
@@ -22,7 +26,7 @@ This results in:
 t_on=3569.85s
 t_off=0.69s 
 
-![alt text](https://github.com/pab96/GitHubGardenObserver/blob/master/Data/GardenPiCam_20170812_182113.jpg "Test")
+![alt text](https://github.com/pab96/GitHubGardenObserver/blob/master/Data/GardenPiCam_20170812_182113.jpg "Picture Title")
 
 
 
@@ -41,7 +45,6 @@ MCP3008 CS/SHDN to Raspberry Pi pin 25
 CHannel 0-7 will then read voltages from 0...3.3V and give a signal 0...1023 accordingly 
 
 Sensors:
-
 
 Data Trasmission:
 
