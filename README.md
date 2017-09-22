@@ -1,7 +1,7 @@
 # GitHubGardenObserver
 Documentation for "Remote Environment Controller for  Experiments in Extreme Environments"
 
-# Project Title
+# A Remote Environment Controller for Experiments in Extreme Environments
 
 
 
@@ -29,6 +29,11 @@ t_off=0.69s
 ![alt text](https://github.com/pab96/GitHubGardenObserver/blob/master/Data/GardenPiCam_20170812_182113.jpg "Picture Title")
 
 
+
+Using the arduino pro mini
+First install Arduino IDE
+For the arduino pro mini you need a FTDI device to program the arduino pro mini (make sure you have both of them for 5V)
+Next you need to install the FTDI driver: follow this intro: https://learn.sparkfun.com/tutorials/how-to-install-ftdi-drivers
 
 
 Multiplexing and analogue to digital conversion (ADC):
