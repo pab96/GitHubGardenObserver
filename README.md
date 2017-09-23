@@ -33,6 +33,7 @@ t_off=0.69s
 Using the arduino pro mini
 First install Arduino IDE. You can use an FTDI device to programm the mini. I tried wtih the one from sparkfun but no matter what I did my PC wouldnt recognice the driver. So I gave up and found a much better otion instead! You can programm the arduino pro mini with a normal Arduino Uno (the one where you can take out the ATMEGA328P), this worked first time I tried! So I recommend you use that option it also spares you from buying an FTDI, rather buy an arduino uno if you don't have one, I'm sure you'll find use for that later. 
 Here (http://www.instructables.com/id/Program-Arduino-Pro-Mini-Using-Arduino-Uno/) is an excellent tutorial on how to programm the arduino pro mini using the arduino uno. In short you need to take out the ATMEGA328P from the Uno, then connect Uno ground to pro mini ground, the Uno 5V pin to VCC on the pro mini and the Rx and Tx pins as well as the reset pin from Uno to the pro mini. Then go to the Arduino IDE -> Tools-> Board -> Arduino Pro Mini  and make sure you have the corret port enabled. Then as usual just upload the program to the Uno which will then go to the pro mini and it works, MAGIC! 
+Before you upload the program arduinoProMiniPowerTimer to the arduino you need to download the "LowPower.h" library (https://github.com/rocketscream/Low-Power) i.e. download the whole folder and save it on your disk (i.e. C:\Program Files (x86)\Arduino\libraries).
 
 
 For the arduino pro mini you need a FTDI device to program the arduino pro mini (make sure you have both of them for 5V)
