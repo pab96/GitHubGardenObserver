@@ -28,7 +28,7 @@ print("Sensors board is being powered...")
 
 ## Sensor data sampling
 print('Reading MCP3008 values, press Ctrl-C to quit...')
-samplingTime=7; # time through which sensor data is sampled
+samplingTime=1; # time through which sensor data is sampled
 samplingInterval=0.25; # sample every 0.25sec
 samplingCount=0
 allSamplingValues=d = np.zeros((samplingTime/samplingInterval+1,8)) # Initialising a zeros matrix
@@ -59,9 +59,9 @@ averageSensorData=np.multiply(averageSensorData, 3.3/1023) # Converting all valu
 # MCP3008 Channel 0: Adjustable Resistor
 averageSensorData[0]=averageSensorData[0]/3.3*100  # Converting to %
 # MCP3008 Channel 1: Light Dependent Resistor LDR
-averageSensorData[1]=averageSensorData[1]/3.3*100  # Converting to % 25% is quite bright, 65% ambient, 95% dark
-# MCP3008 Channel 2: Soil Moisture Sensor. Was calibrated by hand: 1.325 is full coverd in water, 3.3 is in air dry. Will read [%] water 0% meaning dry!
-averageSensorData[2]=(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Converting to %, 0 being dry, 100% being immersed in water
+averageSensorData[1]=averageSensorData[1]/3.3*100  # Converting to % 2% just enough to see, above 8% you can see well, 30% ambient in shadow, 90% quite bright
+# MCP3008 Channel 2: Soil Moisture Sensor. Was calibrated by hand: 0.92V when fully coverd in water, 0V is in air dry. Will read [%] water 0% meaning dry and 100% fully wet!
+averageSensorData[2]=averageSensorData[2]/1.15*100#(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Converting to %, 0 being dry, 100% being immersed in water
 # MCP3008 Channel 3: Battery Voltage: Batterie is on a voltage devider with a R_1=5.1Mohm and R_2=1M+3*100k=1.3Mohm -> Voltage over R_2: V_measured=V_2=V_battery*R_2/(R_1+R_2)-> V_battery=V_measured*(R_1+R_2)/R_2
 # Voltage could also be converted in % charged. 12.7V means 100% charged, 11.9 means discharged
 averageSensorData[3]=averageSensorData[3]*(5.1+1.3)/1.3  # Converting to %, 0 being empty 100% being charged
@@ -75,7 +75,7 @@ averageSensorData[4]=0.125*averageSensorData[4]+1  #UV intensity @365nm in [mW/c
 averageSensorData[6]=(5/averageSensorData[6]-1)*1000/25000*100 # R_referencereading was doen in room with open window 20degC August [%]
 
 # MCP3008 Channel 7: Thermometer LM35DZ V_out=10mV/degC*T
-averageSensorData[7]=averageSensorData[7]/0.01  # Temp in [DegC]
+averageSensorData[7]=averageSensorData[7]#/0.01  # Temp in [DegC]
 
 
 ## preparing sensor data for storage
