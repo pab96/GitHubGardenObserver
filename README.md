@@ -41,9 +41,9 @@ We measured during this 1h sleep intervall the arduino draws 0.06mA from the 9V 
 Multiplexing and analogue to digital conversion (ADC):
 More info on setting up MCP3008: https://learn.adafruit.com/raspberry-pi-analog-to-digital-converters/mcp3008
 Connect MCP3008 as follows:
-Markup : * MCP3008 VDD to Raspberry Pi 3.3V
-         * MCP3008 VREF to Raspberry Pi 3.3V
-         * MCP3008 AGND to Raspberry Pi GND
+* MCP3008 VDD to Raspberry Pi 3.3V
+* MCP3008 VREF to Raspberry Pi 3.3V
+* MCP3008 AGND to Raspberry Pi GND
 MCP3008 DGND to Raspberry Pi GND
 MCP3008 CLK to Raspberry Pi pin 18
 MCP3008 DOUT to Raspberry Pi pin 23
