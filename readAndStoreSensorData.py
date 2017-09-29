@@ -51,32 +51,37 @@ stdSensorData=np.std(allSamplingValues,axis=0)
 #print(averageSensorData)
 #print(stdSensorData)
 ##sys.stdout.write(strftime("%d.%m.%Y %H:%M:%S", localtime())) # use sys.stout.write to print in same line as command below
-##print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(averageSensorData,decimals=1)))
+print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(averageSensorData,decimals=1)))
 ##print(' | {0:>4} | {1:>4} | {2:>4} | {3:>4} | {4:>4} | {5:>4} | {6:>4} | {7:>4} |'.format(*np.around(stdSensorData,decimals=2)))
+
 
 ## Converting MCP3008 value to respective Units
 averageSensorData=np.multiply(averageSensorData, 3.3/1023) # Converting all values to Volt
-# MCP3008 Channel 0: Adjustable Resistor
-averageSensorData[0]=averageSensorData[0]/3.3*100  # Converting to %
-# MCP3008 Channel 1: Light Dependent Resistor LDR
-averageSensorData[1]=averageSensorData[1]/3.3*100  # Converting to % 2% just enough to see, above 8% you can see well, 30% ambient in shadow, 90% quite bright
-# MCP3008 Channel 2: Soil Moisture Sensor. Was calibrated by hand: 0.92V when fully coverd in water, 0V is in air dry. Will read [%] water 0% meaning dry and 100% fully wet!
-averageSensorData[2]=averageSensorData[2]/1.15*100#(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Converting to %, 0 being dry, 100% being immersed in water
-# MCP3008 Channel 3: Battery Voltage: Batterie is on a voltage devider with a R_1=5.1Mohm and R_2=1M+3*100k=1.3Mohm -> Voltage over R_2: V_measured=V_2=V_battery*R_2/(R_1+R_2)-> V_battery=V_measured*(R_1+R_2)/R_2
+
+# MCP3008 Channel 0: UV Sensor
+averageSensorData[0]=0.125*averageSensorData[0]+1  #UV intensity @365nm in [mW/cm^2] 1-3 is minimal UV, 3-4 is low, 5-6 is moderate, 7-9 is high, 10-12 is very high exposure
+
+# MCP3008 Channel 1: Battery Voltage: Batterie is on a voltage devider with a R_1=5.1Mohm and R_2=1M+3*100k=1.3Mohm -> Voltage over R_2: V_measured=V_2=V_battery*R_2/(R_1+R_2)-> V_battery=V_measured*(R_1+R_2)/R_2
 # Voltage could also be converted in % charged. 12.7V means 100% charged, 11.9 means discharged
-averageSensorData[3]=averageSensorData[3]*(5.1+1.3)/1.3  # Converting to %, 0 being empty 100% being charged
-# MCP3008 Channel 4: UV Sensor
-averageSensorData[4]=0.125*averageSensorData[4]+1  #UV intensity @365nm in [mW/cm^2] 1-3 is minimal UV, 3-4 is low, 5-6 is moderate, 7-9 is high, 10-12 is very high exposure
+averageSensorData[1]=averageSensorData[1]*(5.1+1.3)/1.3  # Converting to %, 0 being empty 100% being charged
 
 
 
-# MCP3008 Channel 6: TGS 2600 Air Contaminants: R_S=(5V/V_out-1)* R_load /R_referenceReading
+# MCP3008 Channel 4: Thermometer LM35DZ V_out=10mV/degC*T
+averageSensorData[4]=averageSensorData[4]/0.01  # Temp in [DegC]
+
+# MCP3008 Channel 5: TGS 2600 Air Contaminants: R_S=(5V/V_out-1)* R_load /R_referenceReading
 # Lower values than 100% mean air is contaminated with CO, Methane, Isobutahnol, Hydrogen, Ethanol
-averageSensorData[6]=(5/averageSensorData[6]-1)*1000/25000*100 # R_referencereading was doen in room with open window 20degC August [%]
+averageSensorData[5]=(5/averageSensorData[5]-1)*1000/25000*100 # R_referencereading was done in room with open window 20degC August [%]
 
-# MCP3008 Channel 7: Thermometer LM35DZ V_out=10mV/degC*T
-averageSensorData[7]=averageSensorData[7]#/0.01  # Temp in [DegC]
+# MCP3008 Channel 7: Soil Moisture Sensor. Was calibrated by hand: 0.92V when fully coverd in water, 0V is in air dry. Will read [%] water 0% meaning dry and 100% fully wet!
+averageSensorData[6]=averageSensorData[6]/1.15*100#(1-(averageSensorData[2]-1.325)/(3.3-1.325))*100  # Converting to %, 0 being dry, 100% being immersed in water
 
+# MCP3008 Channel 8: Light Dependent Resistor LDR
+averageSensorData[7]=averageSensorData[7]/3.3*100  # Converting to % 2% just enough to see, above 8% you can see well, 30% ambient in shadow, 90% quite bright
+
+# MCP3008 Channel 0: Adjustable Resistor
+# averageSensorData[0]=averageSensorData[0]/3.3*100  # Converting to %
 
 ## preparing sensor data for storage
 print("Date,Time | Avg_Sens_1 |Avg_Sens_2 |Avg_Sens_3 |Avg_Sens_4 |Avg_Sens_5 |Avg_Sens_6 |Avg_Sens_7 |Avg_Sens_8 ||Std_Sens_1 |Std_Sens_2 |Std_Sens_3 |Std_Sens_4 |Std_Sens_5 |Std_Sens_6 |Std_Sens_7 |Std_Sens_8 |")
