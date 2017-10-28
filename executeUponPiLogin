@@ -8,7 +8,7 @@ sudo python /home/pi/BioMaker/GitHubGardenObserver/readAndStoreSensorData.py
 cd BioMaker/GitHubGardenObserver/
 ./uploadToGitHub
 
-countDownToShutDown="15"
+countDownToShutDown="5"
 
 echo "WARNING: Pi will shut off in $countDownToShutDown sec. Press Ctrl-c to stop"
 
